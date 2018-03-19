@@ -36,6 +36,9 @@ if (!Dangereous.allocUnsafe) {
     if (typeof size !== 'number') {
       throw new TypeError('The "size" argument must be of type number. Received type ' + typeof size)
     }
+    if (size < 0) {
+      throw new RangeError('The value "' + size + '" is invalid for option "size"')
+    }
     return Buffer(size)
   }
 }
@@ -44,6 +47,9 @@ if (!Dangereous.allocUnsafeSlow) {
   Dangereous.allocUnsafeSlow = function (size) {
     if (typeof size !== 'number') {
       throw new TypeError('The "size" argument must be of type number. Received type ' + typeof size)
+    }
+    if (size < 0) {
+      throw new RangeError('The value "' + size + '" is invalid for option "size"')
     }
     return buffer.SlowBuffer(size)
   }
