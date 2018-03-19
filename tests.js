@@ -350,8 +350,17 @@ test('.alloc(size, fill) is `fill`-filled', function (t) {
   t.ok(ok)
   t.deepEqual(index.Buffer.alloc(9, 'a'), index.Buffer.alloc(9, 97))
   t.notDeepEqual(index.Buffer.alloc(9, 'a'), index.Buffer.alloc(9, 98))
-  t.deepEqual(index.Buffer.alloc(5, 'ok'), index.Buffer.from('okoko'))
+
+  var tmp = new buffer.Buffer(2)
+  tmp.fill('ok')
+  if (tmp[1] === tmp[0]) {
+    // Outdated Node.js
+    t.deepEqual(index.Buffer.alloc(5, 'ok'), index.Buffer.from('ooooo'))
+  } else {
+    t.deepEqual(index.Buffer.alloc(5, 'ok'), index.Buffer.from('okoko'))
+  }
   t.notDeepEqual(index.Buffer.alloc(5, 'ok'), index.Buffer.from('kokok'))
+
   t.end()
 })
 
