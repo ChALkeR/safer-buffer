@@ -102,7 +102,9 @@ test('All Safer methods are present in Dangerous', function (t) {
     if (method === 'Buffer') return;
     [index, safer, dangerous].forEach(function (impl) {
       t.equal(impl[method], safer[method], method)
-      t.notEqual(typeof impl[method], 'undefined', method)
+      if (method !== 'kStringMaxLength') {
+        t.notEqual(typeof impl[method], 'undefined', method)
+      }
     })
   })
   Object.keys(safer.Buffer).forEach(function (method) {
@@ -119,7 +121,9 @@ test('Safe methods from Dangerous methods are present in Safer', function (t) {
     if (method === 'Buffer') return;
     [index, safer, dangerous].forEach(function (impl) {
       t.equal(impl[method], dangerous[method], method)
-      t.notEqual(typeof impl[method], 'undefined', method)
+      if (method !== 'kStringMaxLength') {
+        t.notEqual(typeof impl[method], 'undefined', method)
+      }
     })
   })
   Object.keys(dangerous.Buffer).forEach(function (method) {
