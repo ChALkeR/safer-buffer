@@ -101,13 +101,13 @@ test('All Safer methods are present in Dangerous', function (t) {
   Object.keys(safer).forEach(function (method) {
     if (method === 'Buffer') return;
     [index, safer, dangerous].forEach(function (impl) {
-      t.equal(impl[method], buffer[method], method)
+      t.equal(impl[method], safer[method], method)
       t.notEqual(typeof impl[method], 'undefined', method)
     })
   })
   Object.keys(safer.Buffer).forEach(function (method) {
     [index, safer, dangerous].forEach(function (impl) {
-      t.equal(impl.Buffer[method], buffer.Buffer[method], method)
+      t.equal(impl.Buffer[method], safer.Buffer[method], method)
       t.notEqual(typeof impl.Buffer[method], 'undefined', method)
     })
   })
@@ -118,14 +118,14 @@ test('Safe methods from Dangerous methods are present in Safer', function (t) {
   Object.keys(dangerous).forEach(function (method) {
     if (method === 'Buffer') return;
     [index, safer, dangerous].forEach(function (impl) {
-      t.equal(impl[method], buffer[method], method)
+      t.equal(impl[method], dangerous[method], method)
       t.notEqual(typeof impl[method], 'undefined', method)
     })
   })
   Object.keys(dangerous.Buffer).forEach(function (method) {
     if (method === 'allocUnsafe' || method === 'allocUnsafeSlow') return;
     [index, safer, dangerous].forEach(function (impl) {
-      t.equal(impl.Buffer[method], buffer.Buffer[method], method)
+      t.equal(impl.Buffer[method], dangerous.Buffer[method], method)
       t.notEqual(typeof impl.Buffer[method], 'undefined', method)
     })
   })
