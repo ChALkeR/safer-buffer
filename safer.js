@@ -27,6 +27,9 @@ if (!Safer.from || Safer.from === Uint8Array.from) {
     if (typeof value === 'number') {
       throw new TypeError('The "value" argument must not be of type number. Received type ' + typeof value)
     }
+    if (value && typeof value.length === 'undefined') {
+      throw new TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type ' + typeof value)
+    }
     return Buffer(value, encodingOrOffset, length)
   }
 }
