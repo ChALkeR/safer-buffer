@@ -39,7 +39,7 @@ if (!Safer.alloc) {
     if (typeof size !== 'number') {
       throw new TypeError('The "size" argument must be of type number. Received type ' + typeof size)
     }
-    if (size < 0) {
+    if (size < 0 || size > Number.MAX_SAFE_INTEGER) {
       throw new RangeError('The value "' + size + '" is invalid for option "size"')
     }
     var buf = Buffer(size)
