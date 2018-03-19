@@ -189,3 +189,67 @@ leaking to the remote attacker.
 
 _Note that the same applies to `new Buffer` usage without zero-filling, depending on the Node.js
 version (and lacking type checks also adds DoS to the list of potential problems)._
+
+<a id="faq"></a>
+## FAQ
+
+<a id="design-flaws"></a>
+### What is wrong with the `Buffer` constructor?
+
+The `Buffer` constructor could be used to create a buffer in many different ways:
+
+- `new Buffer(42)` creates a `Buffer` of 42 bytes. Before Node.js 8, this buffer contained
+  *arbitrary memory* for performance reasons, which could include anything ranging from
+  program source code to passwords and encryption keys.
+- `new Buffer('abc')` creates a `Buffer` that contains the UTF-8-encoded version of
+  the string `'abc'`. A second argument could specify another encoding: For example,
+  `new Buffer(string, 'base64')` could be used to convert a Base64 string into the original
+  sequence of bytes that it represents.
+- There are several other combinations of arguments.
+
+This meant that, in code like `var buffer = new Buffer(foo);`, *it is not possible to tell
+what exactly the contents of the generated buffer are* without knowing the type of `foo`.
+
+Sometimes, the value of `foo` comes from an external source. For example, this function
+could be exposed as a service on a web server, converting a UTF-8 string into its Base64 form:
+
+```
+function stringToBase64(req, res) {
+  // The request body should have the format of `{ string: 'foobar' }`
+  const rawBytes = new Buffer(req.body.string)
+  const encoded = rawBytes.toString('base64')
+  res.end({ encoded: encoded })
+}
+```
+
+Note that this code does *not* validate the type of `req.body.string`:
+
+- `req.body.string` is expected to be a string. If this is the case, all goes well.
+- `req.body.string` is controlled by the client that sends the request.
+- If `req.body.string` is the *number* `50`, the `rawBytes` would be 50 bytes:
+  - Before Node.js 8, the content would be uninitialized
+  - After Node.js 8, the content would be `50` bytes with the value `0`
+
+Because of the missing type check, an attacker could intentionally send a number
+as part of the request. Using this, they can either:
+
+- Read uninitialized memory. This **will** leak passwords, encryption keys and other
+  kinds of sensitive information. (Information leak)
+- Force the program to allocate a large amount of memory. For example, when specifying
+  `500000000` as the input value, each request will allocate 500MB of memory.
+  This can be used to either exhaust the memory available of a program completely
+  and make it crash, or slow it down significantly. (Denial of Service)
+
+Both of these scenarios are considered serious security issues in a real-world
+web server context.
+
+when using `Buffer.from(req.body.string)` instead, passing a number will always
+throw an exception instead, giving a controlled behaviour that can always be
+handled by the program.
+
+<a id="ecosystem-usage"></a>
+### The `Buffer()` constructor has been deprecated for a while. Is this really an issue?
+
+Surveys of code in the `npm` ecosystem have shown that the `Buffer()` constructor is still
+widely used. This includes new code, and overall usage of such code has actually been
+*increasing*.
