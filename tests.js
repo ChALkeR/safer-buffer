@@ -296,12 +296,12 @@ test('.allocUnsafe / .allocUnsafeSlow are fillable and have correct lengths', fu
       var buf = dangerous.Buffer[method](length)
       if (!buffer.Buffer.isBuffer(buf)) ok = false
       if (buf.length !== length) ok = false
-      buf.fill(0)
+      buf.fill(0, 0, length)
       var j
       for (j = 0; j < length; j++) {
         if (buf[j] !== 0) ok = false
       }
-      buf.fill(1)
+      buf.fill(1, 0, length)
       for (j = 0; j < length; j++) {
         if (buf[j] !== 1) ok = false
       }
