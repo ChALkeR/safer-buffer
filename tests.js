@@ -218,10 +218,14 @@ test('Invalid calls throw', function (t) {
     t.throws(function () { dangerous.Buffer[method]('') })
     t.throws(function () { dangerous.Buffer[method]('string') })
     t.throws(function () { dangerous.Buffer[method]('string', 'utf-8') })
-    t.throws(function () { dangerous.Buffer[method](-10) })
-    t.throws(function () { dangerous.Buffer[method](-1e90) })
     t.throws(function () { dangerous.Buffer[method](Infinity) })
-    t.throws(function () { dangerous.Buffer[method](-Infinity) })
+    if (dangerous.Buffer[method] === buffer.Buffer.allocUnsafe) {
+      t.skip('Skipping, older impl of allocUnsafe coerced negative sizes to 0')
+    } else {
+      t.throws(function () { dangerous.Buffer[method](-10) })
+      t.throws(function () { dangerous.Buffer[method](-1e90) })
+      t.throws(function () { dangerous.Buffer[method](-Infinity) })
+    }
     t.throws(function () { dangerous.Buffer[method](null) })
     t.throws(function () { dangerous.Buffer[method](undefined) })
     t.throws(function () { dangerous.Buffer[method]() })
