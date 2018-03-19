@@ -177,9 +177,9 @@ test('Constructor is buffer.Buffer', function (t) {
     t.equal(impl.Buffer.from(new Uint8Array([0, 42, 3])).constructor, buffer.Buffer)
     t.equal(impl.Buffer.from([]).constructor, buffer.Buffer)
   });
-  ['allocUnsafe', 'allocUnsafeSlow'].forEach(function (method) {
-    t.equal(dangerous.Buffer[method](0).constructor, buffer.Buffer)
-    t.equal(dangerous.Buffer[method](10).constructor, buffer.Buffer)
+  [0, 10, 100].forEach(function (arg) {
+    t.equal(dangerous.Buffer.allocUnsafe(arg).constructor, buffer.Buffer)
+    t.equal(dangerous.Buffer.allocUnsafeSlow(arg).constructor, buffer.SlowBuffer(0).constructor)
   })
   t.end()
 })
