@@ -24,6 +24,8 @@
     "tape": "^4.9.0"
   },
   "files": [
+    "Porting-Buffer.md",
+    "Readme.md",
     "tests.js",
     "dangerous.js",
     "safer.js"
