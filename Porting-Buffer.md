@@ -119,14 +119,14 @@ if (Buffer.from && Buffer.from !== Uint8Array.from) {
 
 `encoding` is optional.
 
-The `typeof notNumber` check is not required in cases if `notNumber` argument is hardcoded (e.g.
-literal `"abc"` or `[0,1,2]`), but is required if it is passed from somewhere else.
-
-Note that the type-check before `new Buffer` is required (for cases when `notNumber` argument is not
+Note that the `typeof notNumber` before `new Buffer` is required (for cases when `notNumber` argument is not
 hard-coded) and _is not caused by the deprecation of Buffer constructor_ — it's exactly _why_ the
 Buffer constructor is deprecated. Ecosystem packages lacking this type-check caused numereous
 security issues — situations when unsanitized user input could end up in the `Buffer(arg)` create
 problems ranging from DoS to leaking sensitive information to the attacker from the process memory.
+
+When `notNumber` argument is hardcoded (e.g. literal `"abc"` or `[0,1,2]`), the `typeof` check can
+be omitted.
 
 Also note that using TypeScript does not fix this problem for you — when libs written in
 `TypeScript` are used from JS, or when user input ends up there — it behaves exactly as pure JS, as
