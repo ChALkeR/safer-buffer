@@ -11,10 +11,30 @@
 
 Modern Buffer API polyfill without footguns.
 
+## How to use?
+
+First, port all `Buffer()` and `new Buffer()` calls to `Buffer.alloc()` and `Buffer.from()` API.
+
+Then, to achieve compatibility with outdated Node.js versions (`<4.5.0` and 5.x `<5.9.0`), use
+`const Buffer = require('safer-buffer').Buffer` in all files where you make calls to the new
+Buffer API. _Use `var` instead of `const` if you need that for your Node.js version range support._
+
+Also, see the
+[porting Buffer](https://github.com/ChALkeR/safer-buffer/blob/master/Porting-Buffer.md) guide.
+
+## Do I need it?
+
+Hopefully, not — dropping support for outdated Node.js versions should be fine nowdays, and that
+is the recommended path forward. You _do_ need to port to the `Buffer.alloc()` and `Buffer.from()`
+though.
+
+See the [porting guide](https://github.com/ChALkeR/safer-buffer/blob/master/Porting-Buffer.md)
+for a better description.
+
 ## Why not [safe-buffer](https://npmjs.com/safe-buffer)?
 
-_In short: while `safe-buffer` serves as a polyfill for the new API, it allows old API usage and itself
-contains footguns._
+_In short: while `safe-buffer` serves as a polyfill for the new API, it allows old API usage and
+itself contains footguns._
 
 `safe-buffer` could be used safely to get the new API while still keeping support for older
 Node.js versions (like this module), but while analyzing ecosystem usage of the old Buffer API
@@ -81,6 +101,7 @@ I filed a PR at
 [mysticatea/eslint-plugin-node#110](https://github.com/mysticatea/eslint-plugin-node/pull/110) to
 partially fix that (for cases when that lint rule is used), but it is a semver-major change for
 linter rules and presets, so it would take significant time for that to reach actual setups.
+_It also hasn't been released yet (2018-03-20)._
 
 Also, `safer-buffer` discourages the usage of `.allocUnsafe()`, which is often done by a mistake.
 It still supports it with an explicit concern barier, by placing it under
