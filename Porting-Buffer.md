@@ -59,7 +59,7 @@ The Node.js 5.x release line has been unsupported since July 2016, and the Node.
 What you would do in this case is to convert all `new Buffer()` or `Buffer()` calls to use `Buffer.alloc()` or `Buffer.from()`, in the following way:
 
 - For `new Buffer(number)`, replace it with `Buffer.alloc(number)`.
-- For `new Buffer(string)` (or `new Buffer(string, encoding)`), replace it with `Buffer.from(string)` (or `new Buffer(string, encoding)`).
+- For `new Buffer(string)` (or `new Buffer(string, encoding)`), replace it with `Buffer.from(string)` (or `Buffer.from(string, encoding)`).
 - For all other combinations of arguments (these are much rarer), also replace `new Buffer(...arguments)` with `Buffer.from(...arguments)`.
 
 Note that `Buffer.alloc()` is also _faster_ on the current Node.js versions than
