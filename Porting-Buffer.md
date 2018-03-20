@@ -7,6 +7,13 @@
 - [Variant 2: Use a polyfill](#variant-2)
 - [Variant 3: manual detection, with safeguards](#variant-3)
 
+### Finding problematic bits of code using grep
+
+Just run `grep -nrE '[^s]Buffer\s*\(' --exclude-dir node_modules`.
+
+It will find all the potentially unsafe places in your own code (with some considerably unlikely
+exceptions).
+
 ### Finding problematic bits of code using Node.js 8
 
 If you’re using Node.js ≥ 8.0.0 (which is recommended), Node.js exposes multiple options that help with finding the relevant pieces of code:
@@ -29,6 +36,18 @@ $ node example.js
     at Object.<anonymous> (/path/to/example.js:2:13)
     [... more stack trace lines ...]
 ```
+
+### Finding problematic bits of code using linters
+
+Eslint rules [no-buffer-constructor](https://eslint.org/docs/rules/no-buffer-constructor)
+or
+[node/no-deprecated-api](https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-deprecated-api.md)
+also find calls to deprecated `Buffer()` API. Those rules are included in some pre-sets.
+
+There is a drawback, though, that it doesn't always
+[work correctly](https://github.com/chalker/safer-buffer#why-not-safe-buffer) when `Buffer` is
+overriden e.g. with a polyfill, so recommended is a combination of this and some other method
+described above.
 
 <a id="variant-1"></a>
 ## Variant 1: Drop support for Node.js ≤ 4.4.x and 5.0.0 — 5.9.x.
