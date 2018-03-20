@@ -85,3 +85,20 @@ linter rules and presets, so it would take significant time for that to reach ac
 Also, `safer-buffer` discourages the usage of `.allocUnsafe()`, which is often done by a mistake.
 It still supports it with an explicit concern barier, by placing it under
 `require('safer-buffer/dangereous')`.
+
+## But isn't throwing bad?
+
+Not really. It's an error that could be noticed and fixed early, instead of causing havoc later like
+unguarded `new Buffer()` calls that end up receiving user input can do.
+
+This package affects only the files where `var Buffer = require('safer-buffer').Buffer` was done, so
+it is really simple to keep track of things and make sure that you don't mix old API usage with that.
+Also, CI should hint anything that you might have missed.
+
+New commits, if tested, won't land new usage of unsafe Buffer API this way.
+_Node.js 10.x also deals with that by printing a runtime depecation warning._
+
+### Would it affect third-party modules?
+
+No, unless someone does an awful thing like monkey-patching or overriding the built-in `Buffer`.
+Don't do that.
