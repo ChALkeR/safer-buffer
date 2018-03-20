@@ -68,8 +68,9 @@ $ ./node-v6.13.0-linux-x64/bin/node example.safe-buffer.js
 ```
 
 See the problem? Adding in `safe-buffer` _magically removes the lint warning_, but the behavior
-remains idential to what we had before, and when launched on Node.js 6.x LTS — this dumps out chunks
-of uninitialized memory. _And this code will still emit runtime warnings on Node.js 10.x and above._
+remains identiсal to what we had before, and when launched on Node.js 6.x LTS — this dumps out
+chunks of uninitialized memory.
+_And this code will still emit runtime warnings on Node.js 10.x and above._
 
 That was done by design. I first considered changing `safe-buffer`, prohibiting old API usage or
 emitting warnings on it, but that significantly diverges from `safe-buffer` design. After some
@@ -121,5 +122,17 @@ _Node.js 10.x also deals with that by printing a runtime depecation warning._
 
 ### Would it affect third-party modules?
 
-No, unless someone does an awful thing like monkey-patching or overriding the built-in `Buffer`.
+No, unless you explicitly do an awful thing like monkey-patching or overriding the built-in `Buffer`.
 Don't do that.
+
+## «Without footguns»?
+
+Well, it is still possible to do _some_ things with `Buffer` API, e.g. accessing `.buffer` property
+on older versions and duping things from there. You shouldn't do that in your code, probabably.
+
+The intention is to remove the most significant footguns that affect lots of packages in the
+ecosystem, and to do it in the proper way.
+
+Also, this package doesn't protect against security issues affecting some Node.js versions, so for
+usage in your own production code, it is still recommended to update to a Node.js version
+[supported by upstream](https://github.com/nodejs/release#release-schedule).
