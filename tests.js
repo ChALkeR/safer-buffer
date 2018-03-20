@@ -205,6 +205,7 @@ test('Invalid calls throw', function (t) {
     t.throws(function () { impl.Buffer.alloc('b25ldHdvdGhyZWU=', 'base64') })
     t.throws(function () { impl.Buffer.alloc(-10) })
     t.throws(function () { impl.Buffer.alloc(1e90) })
+    t.throws(function () { impl.Buffer.alloc(2 * (1 << 30)) })
     t.throws(function () { impl.Buffer.alloc(Infinity) })
     t.throws(function () { impl.Buffer.alloc(-Infinity) })
     t.throws(function () { impl.Buffer.alloc(null) })
@@ -218,6 +219,7 @@ test('Invalid calls throw', function (t) {
     t.throws(function () { dangerous.Buffer[method]('') })
     t.throws(function () { dangerous.Buffer[method]('string') })
     t.throws(function () { dangerous.Buffer[method]('string', 'utf-8') })
+    t.throws(function () { dangerous.Buffer[method](2 * (1 << 30)) })
     t.throws(function () { dangerous.Buffer[method](Infinity) })
     if (dangerous.Buffer[method] === buffer.Buffer.allocUnsafe) {
       t.skip('Skipping, older impl of allocUnsafe coerced negative sizes to 0')
