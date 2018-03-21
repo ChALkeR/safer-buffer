@@ -97,6 +97,14 @@ test('Built-in Buffer static methods/properties are inherited', function (t) {
   t.end()
 })
 
+test('.prototype property of Buffer is inherited', function (t) {
+  [index, safer, dangerous].forEach(function (impl) {
+    t.equal(impl.Buffer.prototype, buffer.Buffer.prototype, 'prototype')
+    t.notEqual(typeof impl.Buffer.prototype, 'undefined', 'prototype')
+  })
+  t.end()
+})
+
 test('All Safer methods are present in Dangerous', function (t) {
   Object.keys(safer).forEach(function (method) {
     if (method === 'Buffer') return;

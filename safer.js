@@ -22,6 +22,8 @@ for (key in Buffer) {
   Safer[key] = Buffer[key]
 }
 
+safer.Buffer.prototype = Buffer.prototype
+
 if (!Safer.from || Safer.from === Uint8Array.from) {
   Safer.from = function (value, encodingOrOffset, length) {
     if (typeof value === 'number') {
