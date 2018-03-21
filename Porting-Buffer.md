@@ -70,6 +70,11 @@ or
 [node/no-deprecated-api](https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-deprecated-api.md)
 is recommended to avoid accidential unsafe Buffer API usage.
 
+There is also a [JSCodeshift codemod](https://github.com/joyeecheung/node-dep-codemod#dep005)
+for automatically migrating Buffer constructors to `Buffer.alloc()` or `Buffer.from()`.
+Note that it currently only works with cases where the arguments are literals or where the
+constructor is invoked with two arguments.
+
 _If you currently support those older Node.js versions and dropping them would be a semver-major change
 for you, or if you support older branches of your packages, consider using [Variant 2](#variant-2)
 or [Variant 3](#variant-3) on older branches, so people using those older branches will also receive
