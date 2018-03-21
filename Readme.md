@@ -120,6 +120,11 @@ Also, CI should hint anything that you might have missed.
 New commits, if tested, won't land new usage of unsafe Buffer API this way.
 _Node.js 10.x also deals with that by printing a runtime depecation warning._
 
+### Would it affect third-party modules?
+
+No, unless you explicitly do an awful thing like monkey-patching or overriding the built-in `Buffer`.
+Don't do that.
+
 ### But I don't want throwing…
 
 That is also fine!
@@ -137,11 +142,6 @@ That way, everything using `Buffer` natively would still work, but there would b
 
 Note that using a linter to catch accidential `Buffer` constructor usage in this case is strongly
 recommended. `Buffer` is not overriden in this usecase, so linters won't get confused.
-
-### Would it affect third-party modules?
-
-No, unless you explicitly do an awful thing like monkey-patching or overriding the built-in `Buffer`.
-Don't do that.
 
 ## «Without footguns»?
 
