@@ -120,6 +120,24 @@ Also, CI should hint anything that you might have missed.
 New commits, if tested, won't land new usage of unsafe Buffer API this way.
 _Node.js 10.x also deals with that by printing a runtime depecation warning._
 
+### But I don't want throwing…
+
+That is also fine!
+
+Also, it could be better in some cases when you don't comprehensive enough test coverage.
+
+In that case — just don't override `Buffer` and use
+`var SaferBuffer = require('safer-buffer').Buffer` instead.
+
+That way, everything using `Buffer` natively would still work, but there would be two drawbacks:
+
+* `Buffer.from`/`Buffer.alloc` won't be polyfilled — use `SaferBuffer.from` and
+  `SaferBuffer.alloc` instead.
+* You are still open to accidentally using the insecure deprecated API — use a linter to catch that.
+
+Note that using a linter to catch accidential `Buffer` constructor usage in this case is strongly
+recommended. `Buffer` is not overriden in this usecase, so linters won't get confused.
+
 ### Would it affect third-party modules?
 
 No, unless you explicitly do an awful thing like monkey-patching or overriding the built-in `Buffer`.
