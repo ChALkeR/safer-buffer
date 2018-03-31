@@ -17,6 +17,8 @@ node_js:
   - '0.10.0'
   - '0.8'
 before_install:
+  - 'echo TRAVIS_NODE_VERSION: "${TRAVIS_NODE_VERSION}"'
+  - 'case "${TRAVIS_NODE_VERSION}" in 0.*) echo "MATCHED!" ;; esac'
   - 'case "${TRAVIS_NODE_VERSION}" in 0.*) export NPM_CONFIG_STRICT_SSL=false ;; esac'
   - 'nvm install-latest-npm'
 notifications:
