@@ -115,6 +115,8 @@ or
 [node/no-deprecated-api](https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-deprecated-api.md)
 is recommended.
 
+_Don't forget to drop the polyfill usage once you drop support for Node.js < 4.5.0._
+
 <a id="variant-3"></a>
 ## Variant 3 — manual detection, with safeguards
 
