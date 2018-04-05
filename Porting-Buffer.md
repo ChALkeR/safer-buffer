@@ -9,7 +9,7 @@
 
 ### Finding problematic bits of code using grep
 
-Just run `grep -nrE '[^s]Buffer\s*\(' --exclude-dir node_modules`.
+Just run `grep -nrE '[^a-zA-Z](Slow)?Buffer\s*\(' --exclude-dir node_modules`.
 
 It will find all the potentially unsafe places in your own code (with some considerably unlikely
 exceptions).
