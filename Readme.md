@@ -9,7 +9,7 @@
 [secuirty-image]: https://img.shields.io/badge/Security-Responsible%20Disclosure-green.svg
 [secuirty-url]: https://github.com/nodejs/security-wg/blob/master/processes/responsible_disclosure_template.md
 
-Modern Buffer API polyfill without footguns.
+Modern Buffer API polyfill without footguns, working on Node.js from 0.8 to current.
 
 ## How to use?
 
