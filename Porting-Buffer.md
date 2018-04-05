@@ -93,18 +93,18 @@ You would take exacly the same steps as in [Variant 1](#variant-1), but with a p
 Make sure that you do not use old `new Buffer` API — in any files where the line above is added,
 using old `new Buffer()` API will _throw_. It will be easy to notice that in CI, though.
 
+Alternatively, you could use [buffer-from](http://www.npmjs.com/package/buffer-from) and/or
+[buffer-alloc](http://www.npmjs.com/package/buffer-alloc) [ponyfills](https://ponyfill.com/) — those
+are great, the only downsides being 4 deps in the tree and slightly more code changes to migrate off
+them (as you would be using e.g. `Buffer.from` under a different name). If you need only
+`Buffer.from` polyfilled — `buffer-from` alone which comes with no extra dependencies.
+
 _Alternatively, you could use [safe-buffer](https://www.npmjs.com/package/safe-buffer) — it also
 provides a polyfill, but takes a different approach which has
 [it's drawbacks](https://github.com/chalker/safer-buffer#why-not-safe-buffer). It will allow you
 to also use the older `new Buffer()` API in your code, though — but that's arguably a benefit, as
 it is problematic, can cause issues in your code, and will start emitting runtime deprecation
 warnings starting with Node.js 10._
-
-_Alternatively, you could use [buffer-from](http://www.npmjs.com/package/buffer-from) and/or
-[buffer-alloc](http://www.npmjs.com/package/buffer-alloc) [ponyfills](https://ponyfill.com/) — those
-are great, the only downsides being 4 deps in the tree and slightly more code changes to migrate off
-them (as you would be using e.g. `Buffer.from` under a different name). If you need only
-`Buffer.from` polyfilled — `buffer-from` alone which comes with no extra dependencies._
 
 Note that in either case, it is important that you also remove all calls to the old Buffer
 API manually — just throwing in `safe-buffer` doesn't fix the problem by itself, it just provides
