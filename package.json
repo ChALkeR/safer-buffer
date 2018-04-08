@@ -1,6 +1,6 @@
 {
   "name": "safer-buffer",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Modern Buffer API polyfill without footguns",
   "main": "safer.js",
   "scripts": {
