@@ -57,7 +57,13 @@ if (!Safer.alloc) {
 }
 
 if (!safer.kStringMaxLength) {
-  safer.kStringMaxLength = process.binding('buffer').kStringMaxLength
+  try {
+    safer.kStringMaxLength = process.binding('buffer').kStringMaxLength
+  } catch (e) {
+    // we can't determine kStringMaxLength in environments where process.binding
+    // is unsupported
+    safer.kStringMaxLength = undefined
+  }
 }
 
 if (!safer.constants) {
