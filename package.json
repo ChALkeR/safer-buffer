@@ -4,6 +4,7 @@
   "description": "Modern Buffer API polyfill without footguns",
   "main": "safer.js",
   "scripts": {
+    "browserify-test": "browserify --external tape tests.js > browserify-tests.js && tape browserify-tests.js",
     "test": "standard && tape tests.js"
   },
   "author": {
