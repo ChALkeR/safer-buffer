@@ -61,15 +61,16 @@ if (!safer.kStringMaxLength) {
     safer.kStringMaxLength = process.binding('buffer').kStringMaxLength
   } catch (e) {
     // we can't determine kStringMaxLength in environments where process.binding
-    // is unsupported
-    safer.kStringMaxLength = undefined
+    // is unsupported, so let's not set it
   }
 }
 
 if (!safer.constants) {
   safer.constants = {
-    MAX_LENGTH: safer.kMaxLength,
-    MAX_STRING_LENGTH: safer.kStringMaxLength
+    MAX_LENGTH: safer.kMaxLength
+  }
+  if (safer.kStringMaxLength) {
+    safer.constants.MAX_STRING_LENGTH = safer.kStringMaxLength
   }
 }
 
