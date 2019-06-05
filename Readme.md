@@ -82,7 +82,7 @@ This footgun is not imaginary — I observed top-downloaded packages doing that 
 
 Also in some cases, even if the API _was_ migrated to use of safe Buffer API — a random pull request
 can bring unsafe Buffer API usage back to the codebase by adding new calls — and that could go
-unnoticed even if you have a linter prohibiting that (becase of the reason stated above), and even
+unnoticed even if you have a linter prohibiting that (because of the reason stated above), and even
 pass CI. _I also observed that being done in popular packages._
 
 Some examples:
