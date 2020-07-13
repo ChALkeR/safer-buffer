@@ -15,7 +15,7 @@ Modern Buffer API polyfill without footguns, working on Node.js from 0.8 to curr
 
 First, port all `Buffer()` and `new Buffer()` calls to `Buffer.alloc()` and `Buffer.from()` API.
 
-Then, to achieve compatibility with outdated Node.js versions (`<4.5.0` and 5.x `<5.9.0`), use
+Then, to achieve compatibility with outdated Node.js versions (`<4.5.0` and 5.x `<5.10.0`), use
 `const Buffer = require('safer-buffer').Buffer` in all files where you make calls to the new
 Buffer API. _Use `var` instead of `const` if you need that for your Node.js version range support._
 
