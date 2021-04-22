@@ -68,7 +68,7 @@ $ ./node-v6.13.0-linux-x64/bin/node example.safe-buffer.js
 ```
 
 See the problem? Adding in `safe-buffer` _magically removes the lint warning_, but the behavior
-remains identiсal to what we had before, and when launched on Node.js 6.x LTS — this dumps out
+remains identical to what we had before, and when launched on Node.js 6.x LTS — this dumps out
 chunks of uninitialized memory.
 _And this code will still emit runtime warnings on Node.js 10.x and above._
 
